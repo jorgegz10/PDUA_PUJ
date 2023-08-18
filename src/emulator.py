@@ -15,7 +15,7 @@ class PDUAEmulator:
 
         # Memory
         self.Program = [''] * 256
-        self.Memory = [''] * 16
+        self.Memory = [''] * 8
         self.Stack = []
         self.ProgramSize = 0
 
@@ -56,9 +56,9 @@ class PDUAEmulator:
 
     def LoadProgram(self, program:list, memory:dict):
         if len(program) > len(self.Program):
-            raise ValueError("binary too large to fit in memory for code")
+            raise MemoryError("El codigo tiene demasiadas instrucciones, limite 256. Recuerde que algunas usan 2 bytes")
         if len(memory) > len(self.Memory):
-            raise ValueError("binary too large to fit in memory for variables")
+            raise ValueError("El codigo tiene demasiadas posiciones de memoria, limite 8.")
 
         self.ProgramSize = len(program)
         for i, v in enumerate(program):
@@ -66,6 +66,13 @@ class PDUAEmulator:
         for i, (k, v) in enumerate(memory.items()):
             self.Memory[i] = self.TransformIntruction(v)
         
+    def check_variables(self):
+        if len(self.Memory) < 5:
+            raise MemoryError('Se requieren 5 posiciones de memoria asignadas: A, Q, Q-1, M, Count')
+
+    def check_halt(self):
+        if '11111111' not in self.Program:
+            raise RuntimeError('El programa requiere la instruccion HLT para finalizar adecuadamente.')
 
     def InvAcc(self):
         resultado = ""
