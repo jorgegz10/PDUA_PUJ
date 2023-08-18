@@ -1,0 +1,4 @@
+**/booth.asm
+__pycache__/
+# macOS Files
+.DS_Store
