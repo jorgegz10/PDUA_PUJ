@@ -29,11 +29,15 @@ def get_answer(Multiplicando_inicial, Multiplicador_inicial, pdua):
             resultado = c2(resultado, final=True)
             _resultado = ('Resultado: ','({})_c2'.format(resultado), -int(resultado,2))
         return _multiplicando_inicial, _multiplicador_inicial, _resultado
+st.set_page_config(layout="wide")
 
+col1, col2 = st.columns(2)
+col1.title('Simulador PDUA')
+col2.image('src/puj.png')
 if 'df' in st.session_state:
     st.session_state['allow_file'] = True
 
-uploaded_file = st.file_uploader("Seleccione Codigo Ensamblador para PDUA", type=['asm'],
+uploaded_file = col1.file_uploader("Seleccione Codigo Ensamblador para PDUA", type=['asm'],
                                  disabled=st.session_state['allow_file'])
 if uploaded_file is not None or 'uploaded_file' in st.session_state:
     if 'uploaded_file' not in st.session_state:
@@ -98,12 +102,11 @@ if uploaded_file is not None or 'uploaded_file' in st.session_state:
         except Exception as e:
             raise e
     
-    st.write('hi')
     
     df = pd.DataFrame({"PC": ProgramCounter_list,
                        "ASM": readable_list,
                        "Acc": reg_Acc_list,
-                       "A": reg_A_list,
+                       "A_reg": reg_A_list,
                        "DPTR": reg_DPTR_list,
                        "A": memory_A_list,
                        "Q": memory_Q_list,
@@ -121,11 +124,11 @@ if uploaded_file is not None or 'uploaded_file' in st.session_state:
         st.session_state['row'] = 0
     if 'max' not in st.session_state:
         st.session_state['max'] = len(df)
-    
-    if st.button('Step()'):
+    col1_1, col1_2 = col1.columns(2)
+    if col1_1.button('Step()'):
         if st.session_state['row'] < st.session_state['max']:
             st.session_state['row'] += 1
-    if st.button('run all'):
+    if col1_2.button('run all'):
         st.session_state['row'] = st.session_state['max']
         _multiplicando_inicial, _multiplicador_inicial, _resultado = get_answer(Multiplicando_inicial, Multiplicador_inicial, pdua)
         col1, col2, col3 = st.columns(3)
