@@ -2,7 +2,7 @@ import os
 import argparse
 import yaml
 import re
-from emulator import PDUAEmulator
+from src.emulator import PDUAEmulator
 from typing import Union, List, Dict
 
 #import streamlit as st
@@ -77,7 +77,7 @@ def split_instructions(code_asm: list) -> Union[List, Dict, Dict]:
             inst_count += 1
     return instructions, jump_reference, variables
 
-def read_yaml(yaml_file: str ='Instructions_set.yaml'):
+def read_yaml(yaml_file: str ='/work/src/Instructions_set.yaml'):
     '''
     Read ISA yaml file
     '''
@@ -223,6 +223,7 @@ def c2(number1,final=False):
         if len(number1) >8:
             number1 = number1[-8:]
     return number1
+
 
 if __name__ == '__main__':
     args = load_program()

@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  
+  pdua:
+    build: .
+    restart: always
+    ports:
+      - "8501:8501"
+    container_name: pdua 
+
+    volumes:
+      - ./:/work
