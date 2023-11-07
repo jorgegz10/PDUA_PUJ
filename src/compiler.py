@@ -166,6 +166,8 @@ def replace_variables(inst: str, jump_reference: dict, variables: dict, isa: dic
         return isa['ISA']['JZ CTE'], var, 'JZ CTE', is_variable
     if v_inst[0] == 'JC':
         return isa['ISA']['JC CTE'], var, 'JC CTE', is_variable
+    if v_inst[0] == 'CALL':
+        return isa['ISA']['CALL CTE'], var, 'CALL CTE', is_variable
     if v_inst[0] == 'RSH':
         return isa['ISA']['RSH ACC CTE'], var, 'RSH ACC CTE', is_variable
     if v_inst[0] == 'LSH':

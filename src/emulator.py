@@ -183,7 +183,7 @@ class PDUAEmulator:
             self.ResetFlags()
         elif instruction == '00001110':
             # CALL CTE | 0xE | (2 bytes)
-            address = self.Program[self.ProgramCounter+1]
+            address = int(self.Program[self.ProgramCounter+1],2)
             self.Stack.append(self.ProgramCounter+2)
             self.ProgramCounter = address
         elif instruction == '00001111':
