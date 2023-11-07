@@ -172,7 +172,8 @@ def replace_variables(inst: str, jump_reference: dict, variables: dict, isa: dic
         return isa['ISA']['RSH ACC CTE'], var, 'RSH ACC CTE', is_variable
     if v_inst[0] == 'LSH':
         return isa['ISA']['LSH ACC CTE'], var, 'LSH ACC CTE', is_variable
-    
+    raise NameError('INSTRUCCION NO EXISTENTE', inst)
+
 def get_int(line: str):
     if isinstance(line, str):
         if line.startswith('0X') or line.startswith('0x'):
