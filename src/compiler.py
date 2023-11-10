@@ -103,14 +103,17 @@ def decode_instructions(instructions: list, jump_reference: dict, variables: dic
     readable_inst = []
     isa = read_yaml()
     #memory = {}
-    for inst in instructions:
+    for i, inst in enumerate(instructions):
         var =0
         try:
             bin_instructions.append(isa['ISA'][inst])
             readable_inst.append(inst)
         except:
-            _inst, var, asm_inst, is_variable = replace_variables(inst, jump_reference, variables, isa)
-            
+            try:
+                _inst, var, asm_inst, is_variable = replace_variables(inst, jump_reference, variables, isa)
+            except NameError as e:
+                raise NameError('Error en instruccion numero {i}. {e}. Es importante que tenga en cuenta que valores de referencia/indicadores, definicion de variables y comentarios no se tienen en cuenta para este conteo de instrucciones de codigo.'.format(i=i, e=e))
+
             bin_instructions.append(_inst)
             readable_inst.append(asm_inst)
             if is_variable:
